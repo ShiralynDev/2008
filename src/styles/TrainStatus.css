@@ -1,0 +1,79 @@
+.status-container {
+    margin: 1rem;
+    margin-top: 70px;
+    padding: 1rem;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.search-input,
+.search-button {
+    height: 40px;
+    max-width: 20%;
+    padding: 0 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.search-input {
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.search-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #555;
+}
+
+.results-container {
+    margin: 1rem;
+    padding: 1px;
+    background-color: #313131;
+    border-radius: 2px;
+    color: white;
+}
+
+body.light .results-container {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.results-container ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+
+.results-container li {
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+/* Light Theme Overrides */
+body.light .search-input {
+    background-color: #f0f0f0;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+body.light .search-button {
+    background-color: #ddd;
+    color: black;
+}
+
+body.light .search-button:hover {
+    background-color: #bbb;
+}
