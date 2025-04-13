@@ -1,2 +1,2 @@
 # 2008
-A website that provides data inspired by https://1409.se
+A website that provides simrail data/stats inspired by https://1409.se
