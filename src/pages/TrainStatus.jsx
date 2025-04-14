@@ -225,22 +225,22 @@ function TrainStatus() {
                 <div>
                     <div>Timetable</div>
                     <div className="train-status-header-second-row">
-                    <div>Ank</div> 
-                    <div>Avg</div>
+                    <div>Arr</div> 
+                    <div>Dep</div>
                     </div>
                 </div>
                 <div>
                     <div>Diff (min)</div>
                     <div className="train-status-header-second-row">
-                    <div>Ank</div> 
-                    <div>Avg</div>
+                    <div>Arr</div> 
+                    <div>Dep</div>
                     </div>
                 </div>
                 <div>
                     <div>Real time</div>
                     <div className="train-status-header-second-row">
-                    <div>Ank</div> 
-                    <div>Avg</div>
+                    <div>Arr</div> 
+                    <div>Dep</div>
                     </div>
                 </div>
                 <div>
