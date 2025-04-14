@@ -77,3 +77,72 @@ body.light .search-button {
 body.light .search-button:hover {
     background-color: #bbb;
 }
+
+.train-status-container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding: 20px;
+    padding-bottom: 5px;
+    margin: 1rem;
+    background-color: #313131;
+}
+
+.train-status-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    border-top: 1px solid #fff;
+    padding: 0px 0;
+}
+
+.train-status-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    border-top: 1px solid #202020;
+    padding: 10px 0;
+    text-align: left;
+}
+
+.train-status-header div {
+    text-align: center;
+    border-right: 1px solid #fff;
+    padding: 0px 0px;
+}
+
+.train-status-header div div {
+    border-right: none;
+    border-bottom: 1px solid #fff;
+    padding: 10px 10px;
+}
+
+
+.train-status-header div div div {
+    border: none;
+}
+
+.train-status-row div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.train-status-header div:last-child,
+.train-status-header-second-row div:last-child,
+.train-status-row div:last-child {
+    border: none;
+}
+
+.train-status-header-second-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.train-status-header-second-row div {
+    display: flex;
+    border: none;
+}
+
+.train-status-header div {
+    font-weight: bold;
+}
