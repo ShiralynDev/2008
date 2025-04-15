@@ -79,6 +79,6 @@ app.get('api/getMessage/:date/:server/:train/:station', (req, res) => {
     res.json(row || { message: null });
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0' () => {
     console.log(`Server running on port ${port}`);
 });
