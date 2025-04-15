@@ -1,14 +1,14 @@
 .status-container {
     margin: 1rem;
-    margin-top: 70px;
+    margin-top: 80px;
     padding: 1rem;
 }
 
 .search-bar {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 1rem;
+    justify-content: flex-start;;
+    gap: 1.5rem;
     flex-wrap: wrap;
 }
 

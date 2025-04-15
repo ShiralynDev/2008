@@ -12,8 +12,6 @@ function Home() {
   
     return (
     <div>
-      <TopBar />
-
       <div className="home-container">
         <h1 className="home-title">Welcome to 2008</h1>
         <button className="home-button" onClick={() => navigate('/trainStatus')}>

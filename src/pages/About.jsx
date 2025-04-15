@@ -10,7 +10,6 @@ function About() {
 
     return (
         <div>
-            <TopBar />
             <div className="about-container">
                 <h1 className="about-title">About 2008</h1>
                 <p>2008 is a open source project that displays intresting data from https://github.com/simrailtools/backend</p>

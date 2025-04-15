@@ -1,141 +1,154 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  body.dark {
-    background-color: #121212;
-    color: white;
-  }
-  
-  body.dark .status-container,
-  body.dark .home-container {
-    background-color: #313131;
-  }
-  
-  body.light {
-    background-color: #f9f9f9;
-    color: #111;
-  }
-  
-  body.light .status-container,
-  body.light .home-container {
-    background-color: #ffffff;
-  }
-  
-  body.light nav button {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  body.light nav button:hover {
-    background-color: #bbb;
-  }
-  
-  .top-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #444444;
-    color: white;
-    padding: 1rem 2rem;
-    margin: 0;
-    box-sizing: border-box;
-    z-index: 1000;
-  }
-  
-  .logo {
-    cursor: pointer;
-    font-size: 1.5rem;
-    margin: 0;
-  }
-  
-  nav button {
-    margin-left: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  nav button:hover {
-    background-color: #555;
-  }
-  
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 25px;
-    margin-left: 1rem;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #444;
-    border: 1px solid #666;
-    transition: background-color 0.3s, border-color 0.3s;
-    border-radius: 25px;
-    width: 55px;
-    height: 25px;
-    box-sizing: border-box;
-    margin-top: -45%;
-    overflow: hidden;
-  }
-  
-  .slider:before {
-    content: "";
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    top: 2.5;
-    left: 2.5px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s, background-color 0.3s;
-    z-index: 2;
-  }
-  
-  input:checked + .slider {
-    background-color: #ddd;
-    border-color: #aaa;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(25px);
-    background-color: #222;
-  }
-  
-  .icon {
-    position: absolute;
-    font-size: 14px;
-    z-index: 1;
-    transition: opacity 0.3s;
-  }
-  
-  .sun {
-    left: 4px;
-    color: #fcd34d;
-  }
-  
-  .moon {
-    right: 8px;
-    color: #a3bffa;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark .status-container,
+body.dark .home-container {
+  background-color: #313131;
+}
+
+body.light {
+  background-color: #f9f9f9;
+  color: #111;
+}
+
+body.light .status-container,
+body.light .home-container {
+  background-color: #ffffff;
+}
+
+body.light nav button {
+  background-color: #ddd;
+  color: black;
+}
+
+body.light nav button:hover {
+  background-color: #bbb;
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  background-color: #444444;
+  color: white;
+  padding: 1rem 2rem;
+  margin: 0;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.logo {
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+nav button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+nav button:hover {
+  background-color: #555;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  margin-left: 1rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #444;
+  border: 1px solid #666;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 25px;
+  width: 55px;
+  height: 25px;
+  box-sizing: border-box;
+  margin-top: -45%;
+  overflow: hidden;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 2.5;
+  left: 2.5px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s, background-color 0.3s;
+  z-index: 2;
+}
+
+input:checked + .slider {
+  background-color: #ddd;
+  border-color: #aaa;
+}
+
+input:checked + .slider:before {
+  transform: translateX(25px);
+  background-color: #222;
+}
+
+.icon {
+  position: absolute;
+  font-size: 14px;
+  z-index: 1;
+  transition: opacity 0.3s;
+}
+
+.sun {
+  left: 4px;
+  color: #fcd34d;
+}
+
+.moon {
+  right: 8px;
+  color: #a3bffa;
+}
+
+.server-input {
+  border: 1px solid #555;
+  background-color: #2a2a2a;
+  color: white;
+  padding: 0.5rem;
+  margin-left: 1rem;
+}

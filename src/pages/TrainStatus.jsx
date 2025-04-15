@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from "react";
-import TopBar from "../components/TopBar";
+import { useEffect, useState, useCallback, useContext } from "react";
+import { SearchContext } from "../App";
 import '../styles/Global.css';
 import '../styles/TrainStatus.css';
 import trainStop from "../components/Classes";
@@ -7,14 +7,13 @@ import trainStop from "../components/Classes";
 function TrainStatus() {
 
     const [today, setToday] = useState("");
-    const [server, setServer] = useState("");
     const [trainNumber, setTrainNumber] = useState("");
     const [date, setDate] = useState("");
-    const [serverList, setServerList] = useState([]);
     const [serverTimeOffset, setServerTimeOffset] = useState(0);
     const [searchResults, setSearchResults] = useState(null);
     const [journeyStops, setJourneyStops] = useState(null);
     const [searchTriggered, setSearchTriggered] = useState(false);
+    const { serverSelect } = useContext(SearchContext);
 
     function formatTimeWithOffset(isoTime) {
         if (!isoTime) return null;
@@ -24,41 +23,18 @@ function TrainStatus() {
     }    
 
     useEffect(() => {
-        if (!server) return;
-    
-        const fetchSomeData = async () => {
+        if (!serverSelect) return;
+        const fetchTimeoffset = async () => {
             try {
-                const res = await fetch(`https://apis.simrail.tools/sit-servers/v1/by-id/${server}`);
+                const res = await fetch(`https://apis.simrail.tools/sit-servers/v1/by-id/${serverSelect}`);
                 const data = await res.json();
                 setServerTimeOffset(data.utcOffsetHours);
             } catch (err) {
                 console.error("Error fetching for server:", err);
             }
         };
-    
-        fetchSomeData();
-    }, [server]);
-
-    useEffect(() => {
-        const now = new Date();
-        const formatted = now.toISOString().split("T")[0];
-        setToday(formatted);
-        setDate(formatted);
-
-        const fetchServers = async () => {
-            try {
-                const res = await fetch("https://apis.simrail.tools/sit-servers/v1/");
-                const data = await res.json();
-                if (Array.isArray(data)) {
-                    setServerList(data.filter(s => s.online));
-                }
-            } catch (err) {
-                console.error("Failed to fetch server list", err);
-            }
-        };
-
-        fetchServers();
-    }, []);
+        fetchTimeoffset();
+    }, [serverSelect]);
 
     const findJourney = async (journeyId) => {
         try {
@@ -125,8 +101,14 @@ function TrainStatus() {
     };    
 
     const handleSearch = useCallback(async () => {
-        if (!trainNumber || !server || !date) {
-            alert("Please enter all info");
+
+        if (!serverSelect || serverSelect === 'default' || serverSelect === '') {
+            alert("Please select a server from the topbar first");
+            return;
+        }
+
+        if (!trainNumber || !serverSelect || !date) {
+            alert("Please enter train number and date");
             return;
         }
     
@@ -134,14 +116,14 @@ function TrainStatus() {
     
         try {
             const isoDateOnly = new Date(date || today).toISOString().split("T")[0];
-            const res = await fetch(`https://apis.simrail.tools/sit-journeys/v1/by-event?serverId=${server}&date=${isoDateOnly}&journeyNumber=${trainNumber}`);
+            const res = await fetch(`https://apis.simrail.tools/sit-journeys/v1/by-event?serverId=${serverSelect}&date=${isoDateOnly}&journeyNumber=${trainNumber}`);
             const data = await res.json();
             setSearchResults(data.items);
             findJourney(data.items[0].journeyId);
         } catch (err) {
             console.error("Failed to fetch train status", err);
         }
-    }, [trainNumber, server, date, today]);
+    }, [trainNumber, serverSelect, date, today]);
 
     useEffect(() => {
         if (!searchTriggered) return;
@@ -151,32 +133,24 @@ function TrainStatus() {
         }, 60000);
     
         return () => clearInterval(interval);
-    }, [searchTriggered, trainNumber, server, date, handleSearch]);
+    }, [searchTriggered, trainNumber, serverSelect, date, handleSearch]);
 
     useEffect(() => {
         document.title = "2008 | trainStatus";
       }, []);      
 
+    useEffect(() => {
+        const todayDate = new Date();
+        const formattedDate = todayDate.toISOString().split("T")[0];
+        setToday(formattedDate);
+        setDate(formattedDate);
+    }, []);
+
     return (
         <div>
-            <TopBar />
-
             <div className="status-container">
                 
                 <div className="search-bar">
-                    <select
-                        className="search-input"
-                        onChange={(e) => setServer(e.target.value)}
-                        defaultValue=""
-                    >
-                        <option value="" disabled>Select Server</option>
-                        {serverList.map(server => (
-                            <option key={server.id} value={server.id}>
-                                {server.code}
-                            </option>
-                        ))}
-                    </select>
-
                     <input
                         type="text"
                         placeholder="Train Number"
@@ -312,7 +286,7 @@ function TrainStatus() {
                     </div>
                     <div>
                         <div>{scheduledArriveDisplay}</div>
-                        <div>{stop.scheduledDepart ? formatTimeWithOffset(stop.scheduledDeparture) : '-'}</div>
+                        <div>{stop.scheduledDepart ? formatTimeWithOffset(stop.scheduledDepart) : '-'}</div>
                     </div>
                     <div>
                         {arriveDiffMinutes !== departDiffMinutes ? (
