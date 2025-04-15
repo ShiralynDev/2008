@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('./db');
 const cors = require('cors');
 const rateLimit = require("express-rate-limit");
+const path = require('path');
 
 const limiter = rateLimit({
     windowMs: 10 * 60 * 1000,
@@ -9,17 +10,19 @@ const limiter = rateLimit({
 });
 
 const app = express()
-const port = 5000
+const port = 3001
 
 app.use(limiter);
 app.use(express.static("public"));
 app.use(cors());
 
-app.get('api/', (req, res) => {
-    res.send('2008 server!')
-})
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.get('api/setMessage/:date/:server/:train/:station/:name/:message', (req, res) => {
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+app.get('/api/setMessage/:date/:server/:train/:station/:name/:message', (req, res) => {
     const { date, server, train, station, name, message } = req.params;
 
     if (message.length > 255) {
@@ -55,7 +58,7 @@ app.get('api/setMessage/:date/:server/:train/:station/:name/:message', (req, res
     });
 })
 
-app.get('api/getMessages/:date/:server/:train/', (req, res) => {
+app.get('/api/getMessages/:date/:server/:train/', (req, res) => {
     const { date, server, train } = req.params;
 
     const rows = db.prepare(`
@@ -67,7 +70,7 @@ app.get('api/getMessages/:date/:server/:train/', (req, res) => {
     res.json(rows || { message: null });
 });
 
-app.get('api/getMessage/:date/:server/:train/:station', (req, res) => {
+app.get('/api/getMessage/:date/:server/:train/:station', (req, res) => {
     const { date, server, train, station } = req.params;
 
     const row = db.prepare(`
