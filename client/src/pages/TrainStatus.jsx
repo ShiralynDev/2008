@@ -36,10 +36,14 @@ function TrainStatus() {
         fetchTimeoffset();
     }, [serverSelect]);
 
-    const findJourney = async (journeyId) => {
+    const findJourney = useCallback(async (journeyId) => {
         try {
             const res = await fetch(`https://apis.simrail.tools/sit-journeys/v1/by-id/${journeyId}`);
             const data = await res.json();
+    
+            const reasonRes = await fetch(`https://2008.name/api/getMessages/${date}/${serverSelect}/${trainNumber}/`);
+            const reasonData = await reasonRes.json();
+            const reasonArray = reasonData.map(obj => [obj.station, obj.message, obj.name]);
     
             const stopMap = {};
     
@@ -48,7 +52,7 @@ function TrainStatus() {
     
                 if (!stopMap[name]) {
                     stopMap[name] = {
-                        cancelled: event.cancelled,
+                        cancelled: null,
                         arrivalTime: null,
                         depatureTime: null,
                         track: null,
@@ -69,15 +73,31 @@ function TrainStatus() {
                         stopMap[name].depatureTime = event.realtimeTime;
                     stopMap[name].scheduledDeparture = event.scheduledTime;
                 }
-
+    
                 if (event.realtimePassengerStop) {
                     stopMap[name].track = event.realtimePassengerStop;
                 }
-
+    
                 if (event.scheduledPassengerStop) {
                     stopMap[name].trackReal = event.scheduledPassengerStop;
                 }
+    
+                const normalize = str => str.trim().toLowerCase().replace(/\s+/g, " ");
+                const matches = reasonArray.filter(
+                    row => normalize(row[0]) === normalize(name)
+                );
 
+                if (matches.length > 0) {
+                    stopMap[name].cancelled = matches[0][1];
+                }
+    
+                if (event.cancelled) {
+                    stopMap[name].cancelled = "Cancelled";
+                }
+    
+                if (stopMap[name].cancelled === null) {
+                    stopMap[name].cancelled = "";
+                }
             });
     
             const stops = Object.values(stopMap).map(s => {
@@ -98,7 +118,17 @@ function TrainStatus() {
         } catch (err) {
             console.error("Failed to fetch journey details", err);
         }
-    };    
+    }, [date, serverSelect, trainNumber]);
+
+    const handleEdit = useCallback(async (station) => {
+        try {
+        const message = prompt(`Enter message for ${station}\nPlease only do this if you are the dispatcher and be nice`);
+
+        await fetch(`https://2008.name/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`);
+        } catch (err) {
+            console.error("Error sending message:", err);
+        }
+    }, [date, serverSelect, trainNumber]);
 
     const handleSearch = useCallback(async () => {
 
@@ -123,14 +153,14 @@ function TrainStatus() {
         } catch (err) {
             console.error("Failed to fetch train status", err);
         }
-    }, [trainNumber, serverSelect, date, today]);
+    }, [trainNumber, serverSelect, date, today, findJourney]);
 
     useEffect(() => {
         if (!searchTriggered) return;
     
         const interval = setInterval(() => {
             handleSearch();
-        }, 60000);
+        }, 40000);
     
         return () => clearInterval(interval);
     }, [searchTriggered, trainNumber, serverSelect, date, handleSearch]);
@@ -305,7 +335,16 @@ function TrainStatus() {
                         <div>{stop.realTimeDepart ? formatTimeWithOffset(stop.realTimeDepart) : '-'}</div>
                     </div>
                     <div>
-                        <div>{stop.cancelled ? 'Cancelled' : ''}</div>
+                        {stop.cancelled === "" ? (
+                            <button
+                            onClick={() => handleEdit(stop.stopPlace)}
+                            style={{ background: "none", border: "1px solid #ccc", padding: "2px 6px", cursor: "pointer", color: "white" }} // move to css
+                            >
+                            Edit
+                            </button>
+                        ) : (
+                            <div>{stop.cancelled}</div>
+                        )}
                     </div>
                     </div>
                 );
