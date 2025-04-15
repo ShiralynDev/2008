@@ -10,7 +10,7 @@ const limiter = rateLimit({
 });
 
 const app = express()
-const port = 3001
+const port = 3000
 
 app.use(limiter);
 app.use(express.static("public"));
