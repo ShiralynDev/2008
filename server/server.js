@@ -18,10 +18,6 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
-
 app.get('/api/setMessage/:date/:server/:train/:station/:name/:message', (req, res) => {
     const { date, server, train, station, name, message } = req.params;
 
@@ -80,6 +76,10 @@ app.get('/api/getMessage/:date/:server/:train/:station', (req, res) => {
     `).get(date, server, train, station);
 
     res.json(row || { message: null });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
 app.listen(port, '0.0.0.0', () => {
