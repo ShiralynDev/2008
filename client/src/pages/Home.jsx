@@ -17,6 +17,20 @@ function Home() {
         <button className="home-button" onClick={() => navigate('/trainStatus')}>
           Go to Train Status
         </button>
+
+      <div className="home-description">
+          <div>
+            <h2>2008</h2>
+            <a href="https://github.com/ShiralynDev/2008">Source code at Github</a>
+          </div>
+
+          <div className="map-container">
+            <iframe 
+              src="https://map.simrail.app/" 
+              title="Map">
+            </iframe>
+          </div>
+        </div>
       </div>
     </div>
     )

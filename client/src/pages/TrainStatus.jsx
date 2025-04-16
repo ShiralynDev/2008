@@ -41,7 +41,7 @@ function TrainStatus() {
             const res = await fetch(`https://apis.simrail.tools/sit-journeys/v1/by-id/${journeyId}`);
             const data = await res.json();
     
-            const reasonRes = await fetch(`https://2008.name/api/getMessages/${date}/${serverSelect}/${trainNumber}/`);
+            const reasonRes = await fetch(`${window.location.origin}/api/getMessages/${date}/${serverSelect}/${trainNumber}/`);
             const reasonData = await reasonRes.json();
             const reasonArray = reasonData.map(obj => [obj.station, obj.message, obj.name]);
     
@@ -125,7 +125,7 @@ function TrainStatus() {
         const message = prompt(`Enter message for ${station}\nPlease only do this if you are the dispatcher and be nice`);
 
         if (message != null && message.length > 0)
-            await fetch(`https://2008.name/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`);
+            await fetch(`${window.location.origin}/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`);
         } catch (err) {
             console.error("Error sending message:", err);
         }

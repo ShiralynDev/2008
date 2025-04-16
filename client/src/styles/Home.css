@@ -15,3 +15,26 @@
     font-size: 1rem;
     cursor: pointer;
 }
+
+.home-description {
+    display: flex;
+    justify-content: space-between;
+}
+
+.map-container {
+    margin: 20px;
+    width: 50%; 
+    height: 600px; 
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+a {
+    color: lightgray;
+}
