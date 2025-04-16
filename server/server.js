@@ -21,6 +21,10 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('/api/setMessage/:date/:server/:train/:station/:name/:message', (req, res) => {
     const { date, server, train, station, name, message } = req.params;
 
+    if (message === undefined || message === null) {
+        return res.status(400).json({ error: "Message is required" });
+    }
+
     if (message.length > 255) {
         return res.status(400).json({ error: "Message too long" });
     }
