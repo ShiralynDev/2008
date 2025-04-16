@@ -124,7 +124,8 @@ function TrainStatus() {
         try {
         const message = prompt(`Enter message for ${station}\nPlease only do this if you are the dispatcher and be nice`);
 
-        await fetch(`https://2008.name/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`);
+        if (message != null && message.length > 0)
+            await fetch(`https://2008.name/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`);
         } catch (err) {
             console.error("Error sending message:", err);
         }
