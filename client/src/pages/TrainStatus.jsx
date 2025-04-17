@@ -290,7 +290,9 @@ function TrainStatus() {
                     if (arrive.getTime() !== depart.getTime()) {
                         realTimeArrive = formatTimeWithOffset(arrive)
                     }
-                }                
+                } else if(stop.realTimeArrive) {
+                    realTimeArrive = formatTimeWithOffset(stop.realTimeArrive);
+                }       
                 
                 let arriveDiffMinutes = null;
                 if (stop.scheduledArrive && stop.realTimeArrive) {
