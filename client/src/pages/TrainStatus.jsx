@@ -74,11 +74,11 @@ function TrainStatus() {
                     stopMap[name].scheduledDeparture = event.scheduledTime;
                 }
     
-                if (event.realtimePassengerStop) {
+                if (event.scheduledPassengerStop) {
                     stopMap[name].track = event.scheduledPassengerStop;
                 }
     
-                if (event.scheduledPassengerStop) {
+                if (event.realtimePassengerStop) {
                     stopMap[name].trackReal = event.realtimePassengerStop;
                 }
     
