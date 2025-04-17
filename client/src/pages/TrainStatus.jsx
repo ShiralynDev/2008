@@ -279,15 +279,18 @@ function TrainStatus() {
                 }
 
                 let realTimeArrive = null;
-
                 if (stop.realTimeArrive && stop.realTimeDepart) {
                     const arrive = new Date(stop.realTimeArrive);
                     const depart = new Date(stop.realTimeDepart);
+                    const depart1minless = new Date(stop.realTimeDepart);
                 
                     arrive.setSeconds(0, 0);
                     depart.setSeconds(0, 0);
+                    depart1minless.setSeconds(0, 0);
+
+                    depart1minless.setMinutes(depart1minless.getMinutes() - 1);
                 
-                    if (arrive.getTime() !== depart.getTime()) {
+                    if (arrive.getTime() !== depart.getTime() && arrive.getTime() !== depart1minless.getTime()) {
                         realTimeArrive = formatTimeWithOffset(arrive)
                     }
                 } else if(stop.realTimeArrive) {
