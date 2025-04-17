@@ -75,11 +75,11 @@ function TrainStatus() {
                 }
     
                 if (event.realtimePassengerStop) {
-                    stopMap[name].track = event.realtimePassengerStop;
+                    stopMap[name].track = event.scheduledPassengerStop;
                 }
     
                 if (event.scheduledPassengerStop) {
-                    stopMap[name].trackReal = event.scheduledPassengerStop;
+                    stopMap[name].trackReal = event.realtimePassengerStop;
                 }
     
                 const normalize = str => str.trim().toLowerCase().replace(/\s+/g, " ");
