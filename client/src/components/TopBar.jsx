@@ -40,9 +40,11 @@ function TopBar() {
           defaultValue=""
         >
           <option value="" disabled>Select Server</option>
-          {serverList.map(server => (
+          {serverList
+            .sort((a, b) => a.code.localeCompare(b.code))
+            .map(server => (
               <option key={server.id} value={server.id}>
-                  {server.code}
+                {server.code}
               </option>
           ))}
         </select>
