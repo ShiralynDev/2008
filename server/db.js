@@ -1,5 +1,5 @@
-const Database = require('better-sqlite3');
-const db = new Database('app.db');
+const Database = require("better-sqlite3");
+const db = new Database("app.db");
 
 db.prepare(`
   CREATE TABLE IF NOT EXISTS messages (
