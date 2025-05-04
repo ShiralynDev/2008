@@ -146,10 +146,17 @@ function TrainStatus() {
 					`Enter message for ${station}\nPlease only do this if you are the dispatcher and be nice`,
 				);
 
-				if (message != null && message.length > 0)
-					await fetch(
+				if (message != null && message.length > 0) {
+					const res = await fetch(
 						`${window.location.origin}/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`,
 					);
+					if (!res.ok) {
+						res.json().then((errorData) => {
+							console.error("Error:", errorData.error);
+							alert(errorData.error);
+						});
+					}
+				}
 			} catch (err) {
 				console.error("Error sending message:", err);
 			}

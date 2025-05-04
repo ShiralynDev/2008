@@ -36,7 +36,7 @@ app.get(
         SELECT 1 FROM messages
         WHERE date = ? AND server = ? AND train = ? AND station = ?
         LIMIT 1
-    `)
+        `)
 			.get(date, server, train, station);
 
 		if (existing) {
