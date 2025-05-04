@@ -29,6 +29,16 @@ app.get('/api/setMessage/:date/:server/:train/:station/:name/:message', (req, re
         return res.status(400).json({ error: "Message too long" });
     }
 
+    const existing = db.prepare(`
+        SELECT 1 FROM messages
+        WHERE date = ? AND server = ? AND train = ? AND station = ?
+        LIMIT 1
+    `).get(date, server, train, station);
+
+    if (existing) {
+        return res.status(400).json({ error: 'There is alredy a message, wait for client to resync incase you typed your message twice' });
+    }
+
     const now = new Date();
     const today = now.toISOString().split('T')[0];
   
