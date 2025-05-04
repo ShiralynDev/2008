@@ -361,10 +361,7 @@ function TrainStatus() {
 						}
 
 						return (
-							<div
-								className="train-status-row"
-								key={stop.journeyId + stop.name}
-							>
+							<div className="train-status-row" key={stop.stopPlace}>
 								<div>
 									<div>{stop.stopPlace}</div>
 									<div>{trackString}</div>
