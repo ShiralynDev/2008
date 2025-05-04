@@ -68,7 +68,7 @@ function TrainStatus() {
 						stopMap[name] = {
 							cancelled: null,
 							arrivalTime: null,
-							depatureTime: null, // (side note: typo? should be "departureTime")
+							departureTime: null,
 							track: null,
 							trackReal: null,
 							scheduledArrival: null,
@@ -85,7 +85,7 @@ function TrainStatus() {
 						stopMap[name].scheduledArrival = event.scheduledTime;
 					} else if (event.type === "DEPARTURE") {
 						if (event.realtimeTimeType === "REAL") {
-							stopMap[name].depatureTime = event.realtimeTime;
+							stopMap[name].departureTime = event.realtimeTime;
 						}
 						stopMap[name].scheduledDeparture = event.scheduledTime;
 					}
@@ -121,7 +121,7 @@ function TrainStatus() {
 					return new trainStop(
 						s.cancelled,
 						s.arrivalTime,
-						s.depatureTime,
+						s.departureTime,
 						s.track,
 						s.trackReal,
 						s.scheduledArrival,
