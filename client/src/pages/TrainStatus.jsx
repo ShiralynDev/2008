@@ -49,15 +49,19 @@ function TrainStatus() {
 				);
 				const data = await res.json();
 
+				let reasonArray = [];
 				const reasonRes = await fetch(
 					`${window.location.origin}/api/getMessages/${date}/${serverSelect}/${trainNumber}/`,
 				);
-				const reasonData = await reasonRes.json();
-				const reasonArray = reasonData.map((obj) => [
-					obj.station,
-					obj.message,
-					obj.name,
-				]);
+				const contentType = reasonRes.headers.get("content-type");
+				if (contentType && contentType.indexOf("application/json") !== -1) {
+					const reasonData = await reasonRes.json();
+					reasonArray = reasonData.map((obj) => [
+						obj.station,
+						obj.message,
+						obj.name,
+					]);
+				}
 
 				const stopMap = {};
 

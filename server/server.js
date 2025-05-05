@@ -6,7 +6,7 @@ const path = require("node:path");
 
 const limiter = rateLimit({
 	windowMs: 10 * 60 * 1000,
-	max: 20,
+	max: 50,
 });
 
 const app = express();

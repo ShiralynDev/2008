@@ -22,6 +22,14 @@ function Home() {
 					Go to Train Status
 				</button>
 
+				<button
+					type="button"
+					className="home-button"
+					onClick={() => navigate("/stationStatus")}
+				>
+					Go to Station Status
+				</button>
+
 				<div className="home-description">
 					<div>
 						<h2>2008</h2>
