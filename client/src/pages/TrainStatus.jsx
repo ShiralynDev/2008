@@ -152,31 +152,6 @@ function TrainStatus() {
 		[date, serverSelect, trainNumber],
 	);
 
-	const handleEdit = useCallback(
-		async (station) => {
-			try {
-				const message = prompt(
-					`Enter message for ${station}\nPlease only do this if you are the dispatcher and be nice`,
-				);
-
-				if (message != null && message.length > 0) {
-					const res = await fetch(
-						`${window.location.origin}/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`,
-					);
-					if (!res.ok) {
-						res.json().then((errorData) => {
-							console.error("Error:", errorData.error);
-							alert(errorData.error);
-						});
-					}
-				}
-			} catch (err) {
-				console.error("Error sending message:", err);
-			}
-		},
-		[date, serverSelect, trainNumber],
-	);
-
 	const handleSearch = useCallback(async () => {
 		if (!serverSelect || serverSelect === "default" || serverSelect === "") {
 			alert("Please select a server from the topbar first");
@@ -202,6 +177,33 @@ function TrainStatus() {
 			console.error("Failed to fetch train status", err);
 		}
 	}, [trainNumber, serverSelect, date, today, findJourney, trainIndex]);
+
+    const handleEdit = useCallback(
+		async (station) => {
+			try {
+				const message = prompt(
+					`Enter message for ${station}\nPlease only do this if you are the dispatcher and be nice`,
+				);
+
+				if (message != null && message.length > 0) {
+					const res = await fetch(
+						`${window.location.origin}/api/setMessage/${date}/${serverSelect}/${trainNumber}/${station}/null/${message}`,
+					);
+					if (!res.ok) {
+						res.json().then((errorData) => {
+							console.error("Error:", errorData.error);
+							alert(errorData.error);
+						});
+					} else {
+                        handleSearch();
+                    }
+				}
+			} catch (err) {
+				console.error("Error sending message:", err);
+			}
+		},
+		[date, serverSelect, trainNumber, handleSearch],
+	);
 
     const handleTrainChange = useCallback((index) => {
         setTrainIndex(index);

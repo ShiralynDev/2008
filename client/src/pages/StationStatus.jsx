@@ -68,33 +68,6 @@ function StationStatus() {
 		fetchDispatchPoints();
 	}, [serverSelect]);
 
-	const handleEdit = useCallback(
-		async (train) => {
-			try {
-				const message = prompt(
-					`Enter message for ${train}\nPlease only do this if you are the dispatcher and be nice`,
-				);
-
-				if (message != null && message.length > 0) {
-					const res = await fetch(
-						`${window.location.origin}/api/setMessage/${date}/${serverSelect}/${train}/${dispatchPointName}/null/${message}`,
-					);
-					if (!res.ok) {
-						res.json().then((errorData) => {
-							console.error("Error:", errorData.error);
-							alert(errorData.error);
-						});
-					} else {
-						fetchTrainReason(train);
-					}
-				}
-			} catch (err) {
-				console.error("Error sending message:", err);
-			}
-		},
-		[serverSelect, date, dispatchPointName, fetchTrainReason],
-	);
-
 	const fetchTrainReason = useCallback(
 		async (trainNumber) => {
 			try {
@@ -123,6 +96,33 @@ function StationStatus() {
 			}
 		},
 		[serverSelect, date, dispatchPointName],
+	);
+
+	const handleEdit = useCallback(
+		async (train) => {
+			try {
+				const message = prompt(
+					`Enter message for ${train}\nPlease only do this if you are the dispatcher and be nice`,
+				);
+
+				if (message != null && message.length > 0) {
+					const res = await fetch(
+						`${window.location.origin}/api/setMessage/${date}/${serverSelect}/${train}/${dispatchPointName}/null/${message}`,
+					);
+					if (!res.ok) {
+						res.json().then((errorData) => {
+							console.error("Error:", errorData.error);
+							alert(errorData.error);
+						});
+					} else {
+						fetchTrainReason(train);
+					}
+				}
+			} catch (err) {
+				console.error("Error sending message:", err);
+			}
+		},
+		[serverSelect, date, dispatchPointName, fetchTrainReason],
 	);
 
 	const handleSearch = useCallback(async () => {
