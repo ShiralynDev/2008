@@ -9,7 +9,6 @@ function StationStatus() {
 	const [dispatchPointSelect, setDispatchPointSelect] = useState(null);
 	const [searchTriggered, setSearchTriggered] = useState(false);
 	const [date, setDate] = useState(null);
-	const [today, setToday] = useState(null);
 	const [searchResults, setSearchResults] = useState(null);
 	const { serverSelect } = useContext(SearchContext);
 	const [reasons, setReasons] = useState({});
@@ -171,7 +170,6 @@ function StationStatus() {
 	useEffect(() => {
 		const todayDate = new Date();
 		const formattedDate = todayDate.toISOString().split("T")[0];
-		setToday(formattedDate);
 		setDate(formattedDate);
 	}, []);
 

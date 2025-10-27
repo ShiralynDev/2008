@@ -12,17 +12,26 @@ function TrainStatus() {
 	const [searchResults, setSearchResults] = useState(null);
 	const [journeyStops, setJourneyStops] = useState(null);
 	const [searchTriggered, setSearchTriggered] = useState(false);
+    const [trainIndex, setTrainIndex] = useState(0);
 	const { serverSelect } = useContext(SearchContext);
 
-	function formatTimeWithOffset(isoTime) {
+	function formatTimeWithOffset(isoTime, full = false) {
 		if (!isoTime) return null;
 		const date = new Date(isoTime);
 		date.setHours(date.getUTCHours() + serverTimeOffset);
-		return date.toLocaleTimeString([], {
-			hour: "2-digit",
-			minute: "2-digit",
-			hour12: false,
-		});
+        if (full) {
+            return date.toLocaleString([], {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            });
+        } else {
+            return date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+            });
+        }
 	}
 
 	useEffect(() => {
@@ -188,11 +197,18 @@ function TrainStatus() {
 			);
 			const data = await res.json();
 			setSearchResults(data.items);
-			findJourney(data.items[0].journeyId);
+			findJourney(data.items[trainIndex].journeyId);
 		} catch (err) {
 			console.error("Failed to fetch train status", err);
 		}
-	}, [trainNumber, serverSelect, date, today, findJourney]);
+	}, [trainNumber, serverSelect, date, today, findJourney, trainIndex]);
+
+    const handleTrainChange = useCallback((index) => {
+        setTrainIndex(index);
+        handleSearch();
+        },
+        [setTrainIndex, handleSearch],
+    );
 
 	useEffect(() => {
 		if (!searchTriggered) return;
@@ -253,6 +269,21 @@ function TrainStatus() {
 									<strong>{journey.originEvent.transport.number}</strong>{" "}
 									{journey.originEvent.stopPlace.name} -{" "}
 									{journey.destinationEvent.stopPlace.name}
+                                    (Depart: {formatTimeWithOffset(journey.originEvent.scheduledTime, true)} {formatTimeWithOffset(journey.originEvent.scheduledTime)})
+                                    <button
+                                        type="button"
+                                        onClick={() => handleTrainChange(searchResults.indexOf(journey))}
+                                        style={{
+                                            background: "none",
+                                            marginLeft: "5px",
+                                            border: "1px solid #ccc",
+                                            padding: "2px 2px",
+                                            cursor: "pointer",
+                                            color: "white",
+                                        }} // move to css
+                                    >
+                                    Select
+									</button>
 									<br />
 								</li>
 							))}
