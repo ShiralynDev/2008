@@ -92,7 +92,7 @@ function StationStatus() {
 				console.error("Error sending message:", err);
 			}
 		},
-		[serverSelect, date, dispatchPointName],
+		[serverSelect, date, dispatchPointName, fetchTrainReason],
 	);
 
 	const fetchTrainReason = useCallback(
