@@ -14,36 +14,32 @@ function Home() {
 		<div>
 			<div className="home-container">
 				<h1 className="home-title">Welcome to 2008</h1>
-				<button
-					type="button"
-					className="home-button"
-					onClick={() => navigate("/trainStatus")}
-				>
-					Go to Train Status
-				</button>
+        <a href="https://github.com/ShiralynDev/2008">
+					Source code at Github
+				</a>
+        <div className="button-container">
+          <button
+            type="button"
+            className="home-button"
+            onClick={() => navigate("/trainStatus")}
+          >
+            Train Status
+          </button>
 
-				<button
-					type="button"
-					className="home-button"
-					onClick={() => navigate("/stationStatus")}
-				>
-					Go to Station Status
-				</button>
-
-				<div className="home-description">
-					<div>
-						<h2>2008</h2>
-						<a href="https://github.com/ShiralynDev/2008">
-							Source code at Github
-						</a>
-					</div>
+          <button
+            type="button"
+            className="home-button"
+            onClick={() => navigate("/stationStatus")}
+          >
+            Station Status
+          </button>
+        </div>
 
 					<div className="map-container">
 						<iframe src="https://map.simrail.app/" title="Map" />
 					</div>
 				</div>
 			</div>
-		</div>
 	);
 }
 
